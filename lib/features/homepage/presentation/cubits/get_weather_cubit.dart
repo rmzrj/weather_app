@@ -12,7 +12,6 @@ class GetWeatherCubit extends Cubit<FetchDataNoInt<Weather>> {
   final HomeRepository _repository;
 
   void fetchWeatherData(String cityName) {
-    print("object1");
     emit(const FetchDataNoInt.pending());
     _repository.getWeatherData(cityName).then(
           (value) => emit(

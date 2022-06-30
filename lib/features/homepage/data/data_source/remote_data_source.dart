@@ -26,7 +26,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<Weather> getWeatherData(String cityName) async {
-    print("object");
+   
     final path = baseUrl + '/weatherByCity/$cityName';
     final res = await _dio.get(path);
     log(res.data.toString());

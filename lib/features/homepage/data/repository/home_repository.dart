@@ -30,7 +30,7 @@ class HomeRepositoryImpl extends HomeRepository {
 
   @override
   Future<Either<Failure, Weather>> getWeatherData(String cityName) {
-    print('2');
+   
     return repoExecute(() => remoteDataSource.getWeatherData(cityName));
   }
 }
