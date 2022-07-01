@@ -55,142 +55,144 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
         backgroundColor: Colors.white,
         body: Material(
-            child: SafeArea(
-          child: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(color: Colors.white),
-            child: FadeTransition(
-              opacity: _fadeAnimation!,
-              child:
-                  BlocListener<GetLocationDataCubit, FetchDataNoInt<Weather>>(
-                listener: (context, state) {
-                  state.maybeWhen(orElse: () {
-                    showDialog<void>(
-                      barrierColor: Colors.white.withOpacity(0.5),
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => const Center(
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
+            child: SingleChildScrollView(
+              child: SafeArea(
+                      child: Container(
+              // constraints: const BoxConstraints.expand(),
+              decoration: const BoxDecoration(color: Colors.white),
+              child: FadeTransition(
+                opacity: _fadeAnimation!,
+                child:
+                    BlocListener<GetLocationDataCubit, FetchDataNoInt<Weather>>(
+                  listener: (context, state) {
+                    state.maybeWhen(orElse: () {
+                      showDialog<void>(
+                        barrierColor: Colors.white.withOpacity(0.5),
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const Center(
+                          child: SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  }, success: (res) {
-                    Navigator.pop(context);
-                    context
-                        .read<GetWeatherCubit>()
-                        .fetchWeatherData(res.cityName!);
-                    context
-                        .read<GetForecastCubit>()
-                        .fetchForecastData(res.cityName!);    
-                  });
-                },
-                child: BlocBuilder<GetWeatherCubit, FetchDataNoInt<Weather>>(
-                    buildWhen: (previous, current) => current.when(
-                        pending: (pen) => false,
-                        success: (res) => true,
-                        failed: (fail) => true),
-                    builder: (context, state) {
-                      _fadeController!.reset();
-                      _fadeController!.forward();
-                      return state.when(
-                          pending: (pen) => const SizedBox(),
-                          success: (data) {
-                            _cityName = data.cityName!;
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(14.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  offset: Offset(0, 1),
-                                                  blurRadius: 2,
-                                                  color: Colors.grey)
-                                            ],
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              const SizedBox(
-                                                width: 16,
-                                              ),
-                                              Expanded(
-                                                child: TextField(
-                                                  onSubmitted: (value) =>
-                                                      context
-                                                          .read<
-                                                              GetWeatherCubit>()
-                                                          .fetchWeatherData(
-                                                              value),
-                                                  decoration:
-                                                      const InputDecoration(
-                                                          hintText:
-                                                              "Search city here",
-                                                          hintStyle: TextStyle(
-                                                              color:
-                                                                  Colors.grey),
-                                                          border:
-                                                              InputBorder.none),
+                      );
+                    }, success: (res) {
+                      Navigator.pop(context);
+                      context
+                          .read<GetWeatherCubit>()
+                          .fetchWeatherData(res.cityName!);
+                      context
+                          .read<GetForecastCubit>()
+                          .fetchForecastData(res.cityName!);    
+                    });
+                  },
+                  child: BlocBuilder<GetWeatherCubit, FetchDataNoInt<Weather>>(
+                      buildWhen: (previous, current) => current.when(
+                          pending: (pen) => false,
+                          success: (res) => true,
+                          failed: (fail) => true),
+                      builder: (context, state) {
+                        _fadeController!.reset();
+                        _fadeController!.forward();
+                        return state.when(
+                            pending: (pen) => const SizedBox(),
+                            success: (data) {
+                              _cityName = data.cityName!;
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(14.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    offset: Offset(0, 1),
+                                                    blurRadius: 2,
+                                                    color: Colors.grey)
+                                              ],
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 16,
                                                 ),
-                                              ),
-                                            ],
+                                                Expanded(
+                                                  child: TextField(
+                                                    onSubmitted: (value) =>
+                                                        context
+                                                            .read<
+                                                                GetWeatherCubit>()
+                                                            .fetchWeatherData(
+                                                                value),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            hintText:
+                                                                "Search city here",
+                                                            hintStyle: TextStyle(
+                                                                color:
+                                                                    Colors.grey),
+                                                            border:
+                                                                InputBorder.none),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 12,
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            AutoRouter.of(context)
-                                                .push(const SettingsScreen());
-                                          },
-                                          icon: const Icon(Icons.settings))
-                                    ],
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              AutoRouter.of(context)
+                                                  .push(const SettingsScreen());
+                                            },
+                                            icon: const Icon(Icons.settings))
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                BlocBuilder<GetForecastCubit,
-                                    FetchDataNoInt<List<Weather>>>(
-                                  buildWhen: (previous, current) =>
-                                      current.when(
-                                          pending: (pen) => false,
-                                          success: (res) => true,
-                                          failed: (fail) => false),
-                                  builder: (context, state) {
-                                   return state.maybeWhen(
-                                      orElse: ()=> const SizedBox(),
-                                        success: (forecast) =>
-                                            WeatherWidget(weather: data,forecast: forecast,));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                          failed: (fail) {
-                            getWeatherWithLocation();
-                            return Center(child: Text(fail.message));
-                          });
-                    }),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  BlocBuilder<GetForecastCubit,
+                                      FetchDataNoInt<List<Weather>>>(
+                                    buildWhen: (previous, current) =>
+                                        current.when(
+                                            pending: (pen) => false,
+                                            success: (res) => true,
+                                            failed: (fail) => false),
+                                    builder: (context, state) {
+                                     return state.maybeWhen(
+                                        orElse: ()=> const SizedBox(),
+                                          success: (forecast) =>
+                                              WeatherWidget(weather: data,forecast: forecast,));
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                            failed: (fail) {
+                              getWeatherWithLocation();
+                              return Center(child: Text(fail.message));
+                            });
+                      }),
+                ),
               ),
-            ),
-          ),
-        )));
+                      ),
+                    ),
+            )));
   }
 
   Future<void> getWeatherWithLocation() async {
