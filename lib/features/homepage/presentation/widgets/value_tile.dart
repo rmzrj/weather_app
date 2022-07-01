@@ -9,42 +9,38 @@ class ValueTile extends StatelessWidget {
   final String value;
   final IconData? iconData;
 
- const ValueTile({
+  const ValueTile({
     Key? key,
     required this.label,
     required this.value,
-     this.iconData,
+    this.iconData,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          this.label,
-          style: TextStyle(
-              color: Colors.black
-                  .withAlpha(80)),
+          label,
+          style: TextStyle(color: Colors.black.withAlpha(80)),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        this.iconData != null
+        iconData != null
             ? Icon(
                 iconData,
                 color: Colors.black,
                 size: 20,
               )
             : const SizedBox(),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(
-          this.value,
-          style: TextStyle(color: Colors.black),
+          value,
+          style: const TextStyle(color: Colors.black),
         ),
       ],
     );

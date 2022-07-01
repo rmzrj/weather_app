@@ -5,18 +5,20 @@ import '../../../../core/utils/converters.dart';
 import '../../../../main.dart';
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    ThemeData appTheme = AppThemeContainer.of(context).theme;
+   
 
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: Colors.black,onPressed: () => Navigator.pop(context),),
         backgroundColor: Colors.white,
-        title: Text("Settings",style: TextStyle(color: Colors.black),),
+        title: const Text("Settings",style: TextStyle(color: Colors.black),),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
         color: Colors.white,
         child: ListView(
           children: <Widget>[
@@ -61,7 +63,7 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(
+           const Divider(
               color: Colors.grey,
               height: 1,
             ),
@@ -72,7 +74,7 @@ class SettingsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                 const Text(
                     "Fahrenheit",
                     style: TextStyle(color:Colors.black,),
                   ),
@@ -89,23 +91,23 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(
+          const  Divider(
               color: Colors.grey,
               height: 1,
             ),
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration:  BoxDecoration(
+                borderRadius:const BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8)),
                 color:Colors.black
                     .withOpacity(0.1),
               ),
-              padding: EdgeInsets.only(left: 10, right: 10),
+              padding:const EdgeInsets.only(left: 10, right: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                const  Text(
                     "Kelvin",
                     style: TextStyle(color: Colors.black),
                   ),

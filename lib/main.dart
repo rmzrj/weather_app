@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/data/constants.dart';
 import 'core/routes/routes.gr.dart';
 import 'core/utils/converters.dart';
-import 'core/utils/themes.dart';
 import 'features/homepage/presentation/cubits/get_forcast_cubit.dart';
 import 'features/homepage/presentation/cubits/get_location_data_cubit.dart';
 import 'features/homepage/presentation/cubits/get_weather_cubit.dart';
@@ -74,8 +73,7 @@ class AppThemeContainer extends StatefulWidget {
 }
 
 class _AppThemeContainerState extends State<AppThemeContainer> {
-  ThemeData _theme = Themes.getTheme(Themes.DARK_THEME_CODE);
-  int themeCode = Themes.DARK_THEME_CODE;
+  
   TemperatureUnit temperatureUnit = TemperatureUnit.celsius;
 
   @override
@@ -83,12 +81,11 @@ class _AppThemeContainerState extends State<AppThemeContainer> {
     super.initState();
     SharedPreferences.getInstance().then((sharedPref) {
       setState(() {
-        themeCode = sharedPref.getInt(PREF_KEY_THEME) ??
-            Themes.DARK_THEME_CODE;
+        
         temperatureUnit = TemperatureUnit.values[
             sharedPref.getInt(PREF_KEY_TEMPERATURE_UNIT) ??
                 TemperatureUnit.celsius.index];
-        _theme = Themes.getTheme(themeCode);
+       
       });
     });
   }
@@ -101,17 +98,6 @@ class _AppThemeContainerState extends State<AppThemeContainer> {
     );
   }
 
-  ThemeData get theme => _theme;
-
-  updateTheme(int themeCode) {
-    setState(() {
-      _theme = Themes.getTheme(themeCode);
-      this.themeCode = themeCode;
-    });
-    SharedPreferences.getInstance().then((sharedPref) {
-      sharedPref.setInt(PREF_KEY_THEME, themeCode);
-    });
-  }
 
   updateTemperatureUnit(TemperatureUnit unit) {
     setState(() {

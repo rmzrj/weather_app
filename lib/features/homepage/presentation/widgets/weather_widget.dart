@@ -15,15 +15,12 @@ class WeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-           
-           WeatherPager(weather: weather),
-           Text(
+          WeatherPager(weather: weather),
+          Text(
             weather.description!.toUpperCase(),
             style: const TextStyle(
               fontSize: 15,
@@ -36,8 +33,8 @@ class WeatherWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-             const Icon(Icons.location_on),
-             const SizedBox(width: 8),
+              const Icon(Icons.location_on),
+              const SizedBox(width: 8),
               Text(
                 weather.cityName!.toUpperCase(),
                 style: const TextStyle(
@@ -49,16 +46,15 @@ class WeatherWidget extends StatelessWidget {
               ),
             ],
           ),
-         
+
           const SizedBox(height: 8),
-         Text(
-                DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
-                style: TextStyle(
-                  color: Colors.black.withAlpha(80),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
+          Text(
+            DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+            style: TextStyle(
+                color: Colors.black.withAlpha(80),
+                fontSize: 14,
+                fontWeight: FontWeight.w500),
+          ),
           Padding(
             child: Divider(
               color: Colors.black.withAlpha(50),
@@ -73,46 +69,45 @@ class WeatherWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            ValueTile(label:"wind speed", value:'${weather.windSpeed} m/s'),
+            ValueTile(label: "wind speed", value: '${weather.windSpeed} m/s'),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Center(
                   child: Container(
                 width: 1,
                 height: 30,
-                color:Colors.black
-                    .withAlpha(50),
+                color: Colors.black.withAlpha(50),
               )),
             ),
             ValueTile(
-               label: "sunrise",
-              value: DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
-                    weather.sunrise! * 1000))),
+                label: "sunrise",
+                value: DateFormat('h:m a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        weather.sunrise! * 1000))),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Center(
                   child: Container(
                 width: 1,
                 height: 30,
-                color: Colors.black
-                    .withAlpha(50),
+                color: Colors.black.withAlpha(50),
               )),
             ),
             ValueTile(
-               label: "sunset",
-               value: DateFormat('h:m a').format(DateTime.fromMillisecondsSinceEpoch(
-                    weather.sunset! * 1000))),
+                label: "sunset",
+                value: DateFormat('h:m a').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        weather.sunset! * 1000))),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Center(
                   child: Container(
                 width: 1,
                 height: 30,
-                color: Colors.black
-                    .withAlpha(50),
+                color: Colors.black.withAlpha(50),
               )),
             ),
-            ValueTile( label: "humidity", value: '${weather.humidity}%'),
+            ValueTile(label: "humidity", value: '${weather.humidity}%'),
           ]),
         ],
       ),
