@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -18,11 +17,9 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<List<Weather>> getForecast(String cityName) async {
-    print('object');
     final path = baseUrl + '/forecastByLocation/$cityName';
     final res = await _dio.get(path);
     List<Weather> result = Weather.fromForecastJson(res.data);
-    print(result.length);
     return result;
   }
 
@@ -30,13 +27,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<Weather> getWeatherData(String cityName) async {
     final path = baseUrl + '/weatherByCity/$cityName';
     final res = await _dio.get(path);
-    log(res.data.toString());
     return Weather.fromJson(res.data);
   }
 
   @override
   Future<Weather> getLocationData(double lat, double lon) async {
-    final path = baseUrl + '/locationData/$lat,$lon';
+    final path = baseUrl + '/locationData/$lat/$lon';
     final res = await _dio.get(path);
     return Weather.fromJson(res.data);
   }
