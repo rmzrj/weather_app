@@ -32,9 +32,9 @@ class TemperatureLineChart extends StatelessWidget {
           )
         ],
         animate: animate,
-        animationDuration: Duration(milliseconds: 500),
-        primaryMeasureAxis: new charts.NumericAxisSpec(
-          tickProviderSpec: new charts.BasicNumericTickProviderSpec(
+        animationDuration: const Duration(milliseconds: 500),
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          tickProviderSpec:  charts.BasicNumericTickProviderSpec(
             zeroBound: false,
           ),
         ),

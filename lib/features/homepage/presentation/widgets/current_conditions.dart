@@ -14,7 +14,7 @@ class CurrentConditions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData appTheme = AppThemeContainer.of(context).theme;
+   
     TemperatureUnit unit = AppThemeContainer.of(context).temperatureUnit;
 
     int currentTemp = weather.temperature!.as(unit).round();

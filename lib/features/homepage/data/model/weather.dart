@@ -73,7 +73,7 @@ class Weather {
   }
 
   IconData getIconData(){
-    switch(this.iconCode){
+    switch(iconCode){
       case '01d': return WeatherIcons.clear_day;
       case '01n': return WeatherIcons.clear_night;
       case '02d': return WeatherIcons.few_clouds_day;

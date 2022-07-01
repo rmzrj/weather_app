@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   Animation<double>? _fadeAnimation;
   AnimationController? _fadeController;
-  String _cityName = 'Chemmad';
+  String _cityName = 'Manama';
 
   @override
   void initState() {
@@ -46,31 +45,40 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         backgroundColor: Colors.white,
         body: Material(
             child: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(color: Colors.white),
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(color: Colors.white),
           child: FadeTransition(
             opacity: _fadeAnimation!,
-            child: BlocBuilder<GetWeatherCubit, FetchDataNoInt<Weather>>(
-                builder: (context, state) {
-                  _fadeController!.reset();
+            child: BlocListener<GetLocationDataCubit, FetchDataNoInt<Weather>>(
+              listener: (context, state) {
+                state.maybeWhen(
+                    orElse: () {},
+                    success: (res) => context
+                        .read<GetWeatherCubit>()
+                        .fetchWeatherData(res.cityName!));
+              },
+              child: BlocBuilder<GetWeatherCubit, FetchDataNoInt<Weather>>(
+                  builder: (context, state) {
+                _fadeController!.reset();
                 _fadeController!.forward();
-             return state.when(
-                  pending: (pen) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                  success: (data) {
-                    _cityName = data.cityName!;
-                    return WeatherWidget(weather: data);
-                  },
-                  failed: (fail) {
-                    return Text(fail.message);
-                  });
-            }),
+                return state.when(
+                    pending: (pen) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    success: (data) {
+                      _cityName = data.cityName!;
+                      return WeatherWidget(weather: data);
+                    },
+                    failed: (fail) {
+                      return Text(fail.message);
+                    });
+              }),
+            ),
           ),
         )));
   }
 
-  getWeatherWithLocation() async {
+  Future<void> getWeatherWithLocation() async {
     var permission = await Permission.locationWhenInUse.status;
     switch (permission) {
       case PermissionStatus.restricted:
@@ -86,7 +94,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       case PermissionStatus.granted:
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.low,
-            timeLimit: const Duration(seconds: 2));
+            timeLimit: const Duration(seconds: 4));
+        
 
         context
             .read<GetLocationDataCubit>()
@@ -95,12 +104,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
+
   void showLocationDeniedDialog() {
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
-          // ThemeData appTheme = AppStateContainer.of(context).theme;
 
           return AlertDialog(
             backgroundColor: Colors.white,
