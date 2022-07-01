@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:weather_app/core/data/models/fetch_data_state.dart';
 import 'package:weather_app/features/homepage/data/model/weather.dart';
+import 'package:weather_app/features/homepage/presentation/cubits/get_forcast_cubit.dart';
 import 'package:weather_app/features/homepage/presentation/cubits/get_location_data_cubit.dart';
 import 'package:weather_app/features/homepage/presentation/cubits/get_weather_cubit.dart';
 import 'package:weather_app/features/homepage/presentation/widgets/weather_widget.dart';
@@ -83,6 +84,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     context
                         .read<GetWeatherCubit>()
                         .fetchWeatherData(res.cityName!);
+                    context
+                        .read<GetForecastCubit>()
+                        .fetchForecastData(res.cityName!);    
                   });
                 },
                 child: BlocBuilder<GetWeatherCubit, FetchDataNoInt<Weather>>(
@@ -94,11 +98,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       _fadeController!.reset();
                       _fadeController!.forward();
                       return state.when(
-                          pending: (pen) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.black,
-                                ),
-                              ),
+                          pending: (pen) => const SizedBox(),
                           success: (data) {
                             _cityName = data.cityName!;
                             return Column(
@@ -165,7 +165,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 const SizedBox(
                                   height: 18,
                                 ),
-                                WeatherWidget(weather: data),
+                                BlocBuilder<GetForecastCubit,
+                                    FetchDataNoInt<List<Weather>>>(
+                                  buildWhen: (previous, current) =>
+                                      current.when(
+                                          pending: (pen) => false,
+                                          success: (res) => true,
+                                          failed: (fail) => false),
+                                  builder: (context, state) {
+                                   return state.maybeWhen(
+                                      orElse: ()=> const SizedBox(),
+                                        success: (forecast) =>
+                                            WeatherWidget(weather: data,forecast: forecast,));
+                                  },
+                                ),
                               ],
                             );
                           },
@@ -233,5 +246,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   getWeatherData() {
     context.read<GetWeatherCubit>().fetchWeatherData(_cityName);
+        context.read<GetForecastCubit>().fetchForecastData(_cityName);
+
   }
 }

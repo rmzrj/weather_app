@@ -18,15 +18,16 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
   @override
   Future<List<Weather>> getForecast(String cityName) async {
+    print('object');
     final path = baseUrl + '/forecastByLocation/$cityName';
     final res = await _dio.get(path);
     List<Weather> result = Weather.fromForecastJson(res.data);
+    print(result.length);
     return result;
   }
 
   @override
   Future<Weather> getWeatherData(String cityName) async {
-   
     final path = baseUrl + '/weatherByCity/$cityName';
     final res = await _dio.get(path);
     log(res.data.toString());

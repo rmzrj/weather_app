@@ -4,13 +4,15 @@ import 'package:weather_app/features/homepage/presentation/widgets/value_tile.da
 import 'package:weather_app/features/homepage/presentation/widgets/weather_pager.dart';
 
 import '../../data/model/weather.dart';
+import 'forecast_horizontal_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
   final Weather weather;
+  final List<Weather> forecast;
 
   const WeatherWidget({
     Key? key,
-    required this.weather,
+    required this.weather,required this.forecast,
   }) : super(key: key);
 
   @override
@@ -61,7 +63,7 @@ class WeatherWidget extends StatelessWidget {
             ),
             padding: EdgeInsets.all(10),
           ),
-          // ForecastHorizontal(weathers: weather.forecast),
+          ForecastHorizontal(weathers:forecast),
           Padding(
             child: Divider(
               color: Colors.black.withAlpha(50),
