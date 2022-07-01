@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/features/homepage/presentation/widgets/value_tile.dart';
+import 'package:weather_app/features/homepage/presentation/widgets/weather_pager.dart';
 
 import '../../data/model/weather.dart';
 
@@ -39,7 +40,7 @@ class WeatherWidget extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          // WeatherSwipePager(weather: weather),
+          WeatherPager(weather: weather),
           Padding(
             child: Divider(
               color: Colors.black.withAlpha(50),

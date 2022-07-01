@@ -20,7 +20,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   Animation<double>? _fadeAnimation;
   AnimationController? _fadeController;
-  String _cityName = 'Manama';
+  String _cityName = 'Chemmad';
 
   @override
   void initState() {
