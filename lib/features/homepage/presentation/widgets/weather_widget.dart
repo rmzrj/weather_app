@@ -21,17 +21,9 @@ class WeatherWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            weather.cityName!.toUpperCase(),
-            style: const TextStyle(
-              fontSize: 25,
-              letterSpacing: 5,
-              color: Colors.black,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-         const SizedBox(height: 20),
-          Text(
+           
+           WeatherPager(weather: weather),
+           Text(
             weather.description!.toUpperCase(),
             style: const TextStyle(
               fontSize: 15,
@@ -40,7 +32,33 @@ class WeatherWidget extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          WeatherPager(weather: weather),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+             const Icon(Icons.location_on),
+             const SizedBox(width: 8),
+              Text(
+                weather.cityName!.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 22,
+                  letterSpacing: 5,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+         
+          const SizedBox(height: 8),
+         Text(
+                DateFormat('EEEE, d MMMM yyyy').format(DateTime.now()),
+                style: TextStyle(
+                  color: Colors.black.withAlpha(80),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
           Padding(
             child: Divider(
               color: Colors.black.withAlpha(50),

@@ -5,7 +5,6 @@ import '../../../../core/utils/converters.dart';
 import '../../../../main.dart';
 import '../../data/model/weather.dart';
 
-
 // Weather Icon, current, min and max temperatures
 
 class CurrentConditions extends StatelessWidget {
@@ -14,7 +13,6 @@ class CurrentConditions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     TemperatureUnit unit = AppThemeContainer.of(context).temperatureUnit;
 
     int currentTemp = weather.temperature!.as(unit).round();
@@ -29,18 +27,43 @@ class CurrentConditions extends StatelessWidget {
           color: Colors.black,
           size: 70,
         ),
-       const SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Text(
-          '$currentTemp°',
-          style: TextStyle(
-              fontSize: 100,
-              fontWeight: FontWeight.w100,
-              color: Colors.black),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '$currentTemp°',
+              style: TextStyle(
+                  fontSize: 100,
+                  fontWeight: FontWeight.w100,
+                  color: Colors.black),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Text(
+                     AppThemeContainer.of(context).temperatureUnit.name == 'celsius' ? 'C' : AppThemeContainer.of(context).temperatureUnit.name == 'kelvin' ? 'K' : 'F' ,
+                    style: const TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black),
+                  ),
+                ),
+                // const Icon(
+                //   Icons.arrow_drop_down,
+                //   size: 28,
+                // )
+              ],
+            ),
+          ],
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          ValueTile(label:"max",value: '$maxTemp'),
+          ValueTile(label: "max", value: '$maxTemp'),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: Center(
@@ -50,7 +73,7 @@ class CurrentConditions extends StatelessWidget {
               color: Colors.black.withAlpha(50),
             )),
           ),
-          ValueTile(label:"min",value: '$minTemp°'),
+          ValueTile(label: "min", value: '$minTemp°'),
         ]),
       ],
     );
