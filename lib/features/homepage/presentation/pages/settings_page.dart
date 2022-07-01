@@ -9,10 +9,11 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
+  
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: BackButton(color: Colors.black,onPressed: () => Navigator.pop(context),),
         backgroundColor: Colors.white,
         title: const Text("Settings",style: TextStyle(color: Colors.black),),

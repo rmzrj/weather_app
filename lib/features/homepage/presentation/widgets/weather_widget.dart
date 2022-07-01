@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/features/homepage/presentation/widgets/value_tile.dart';
 import 'package:weather_app/features/homepage/presentation/widgets/weather_pager.dart';
 
+import '../../../../core/data/models/fetch_data_state.dart';
 import '../../data/model/weather.dart';
+import '../cubits/get_forcast_cubit.dart';
 import 'forecast_horizontal_widget.dart';
 
 class WeatherWidget extends StatelessWidget {
   final Weather weather;
-  final List<Weather> forecast;
+  // final List<Weather> forecast;
 
   const WeatherWidget({
     Key? key,
     required this.weather,
-    required this.forecast,
+    // required this.forecast,
   }) : super(key: key);
 
   @override
@@ -64,7 +67,18 @@ class WeatherWidget extends StatelessWidget {
             ),
             padding: EdgeInsets.all(10),
           ),
-          ForecastHorizontal(weathers: forecast),
+          BlocBuilder<GetForecastCubit, FetchDataNoInt<List<Weather>>>(
+              buildWhen: (previous, current) => current.when(
+                  pending: (pen) => false,
+                  success: (res) => true,
+                  failed: (fail) => false),
+              builder: (context, state) {
+                return state.maybeWhen(
+                    orElse: () => const SizedBox(),
+                    success: (forecast) {
+                      return ForecastHorizontal(weathers: forecast);
+                    });
+              }),
           Padding(
             child: Divider(
               color: Colors.black.withAlpha(50),
@@ -136,7 +150,9 @@ class WeatherWidget extends StatelessWidget {
               ),
             ),
           ),
-         const SizedBox(height: 80,)
+          const SizedBox(
+            height: 80,
+          )
         ],
       ),
     );

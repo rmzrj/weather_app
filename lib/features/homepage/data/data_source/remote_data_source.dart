@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/core/data/constants.dart';
@@ -19,6 +18,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<List<Weather>> getForecast(String cityName) async {
     final path = baseUrl + '/forecastByLocation/$cityName';
     final res = await _dio.get(path);
+
     List<Weather> result = Weather.fromForecastJson(res.data);
     return result;
   }
@@ -27,6 +27,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   Future<Weather> getWeatherData(String cityName) async {
     final path = baseUrl + '/weatherByCity/$cityName';
     final res = await _dio.get(path);
+
     return Weather.fromJson(res.data);
   }
 
