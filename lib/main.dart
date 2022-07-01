@@ -50,9 +50,6 @@ class MyApp extends StatelessWidget {
         routeInformationParser: _appRouter.defaultRouteParser(),
         routerDelegate: _appRouter.delegate(),
         title: 'WeatherApp',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
       ),
     );
   }
